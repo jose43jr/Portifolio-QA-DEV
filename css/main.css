@@ -173,13 +173,15 @@ h3 {
 .section-title {
     margin-bottom: var(--spacing-md);
     position: relative;
-    display: inline-block;
+    display: block;
+    text-align: center;
 }
 
 .section-title::after {
     content: '';
     position: absolute;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     bottom: -5px;
     width: 40px;
     height: 3px;
