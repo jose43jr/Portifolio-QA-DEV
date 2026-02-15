@@ -1,0 +1,45 @@
+-https://github.com/jose43jr/Landing-Page-Checkout-Inteligente-QA-Automation
+
+
+-https://github.com/jose43jr/Appium-projeto-09-saucedemo
+Validar fluxo web mobile no Chrome do emulador Android (Login + Menu/Hamburger).
+Appium 3.x + driver uiautomator2
+Android SDK (cmdline-tools, platform-tools, emulator, API 34)
+Chromedriver 113 em H:/Appium/drivers/chromedriver.exe
+Python 3.11 + pip install -r requirements.txt
+caminho para a pasta do vídeo:
+"H:\Video\Appium\2025-10-30_21-29-29.mp4"
+
+-https://github.com/jose43jr/Cypress-login-report-ProjetoPessoal
+Este projeto foi criado para automatizar testes de login usando o framework Cypress.
+Além dos testes, ele gera relatórios em HTML com Mochawesome e inclui um script .bat que executa tudo automaticamente.
+Tecnologias Utilizadas
+Cypress
+Mochawesome
+JavaScript
+Windows Batch Script
+
+-https://github.com/jose43jr/Postman-Proj3-API-SauceDemo
+Este projeto é focado em testar a camada de API de um e-commerce. A ideia é validar as regras principais de compra sem usar a interface gráfica (sem navegador).
+As requisições foram montadas e executadas usando Postman (app desktop).
+caminho para a pasta do vídeo:
+"H:\Video\Cypress Proj\Postman Proj3 API\Postman-proj3.mp4"
+
+-https://github.com/jose43jr/Cypress-Proj2-Carrinho-Saucedemo
+Validar o fluxo de compra inicial em um e-commerce de demonstração (SauceDemo), garantindo que o usuário consiga:
+adicionar produtos ao carrinho,
+visualizar os itens selecionados,
+remover itens indesejados,
+e iniciar o checkout.
+caminho para a pasta do vídeo:
+"H:\Video\Cypress Proj\Cypress Proj2 Carrinho\1025 (1)(1).mp4"
+
+-https://github.com/jose43jr/Cypress-Proj1-Login-Saucedemo
+Validar o fluxo de autenticação (login/logout) de um e-commerce de demonstração chamado SauceDemo (https://www.saucedemo.com/ ). Este projeto foca em garantir que apenas usuários autorizados conseguem acessar a área interna do sistema e que o sistema responde corretamente a tentativas inválidas.
+Ferramentas que serão usadas neste projeto:
+Cypress (teste automatizado end-to-end)
+Node.js / npm
+VSCode
+GitHub (para versionamento e portfólio)
+caminho para a pasta do vídeo:
+"H:\Video\Cypress Proj\Cypress Proj1 Login\Cypress-Login-Proj1.mp4"

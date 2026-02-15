@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QA Engineer Portfolio</title>
+    <meta name="description"
+        content="QA Engineer especializado em automação de testes E2E, APIs e mobile. Portfólio profissional de José Feitosa Jr.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+
+    <!-- Loader -->
+    <div id="loader">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress"></div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">PORTFOLIO<span class="text-accent">.QA</span></div>
+
+                <div class="hamburger">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                </div>
+
+                <ul class="nav-links">
+                    <li><a href="#about">Sobre</a></li>
+                    <li><a href="#qualities">Qualidades</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#fundamentals">Fundamentos</a></li>
+                    <li><a href="#projects">Projetos</a></li>
+                    <li><a href="#videos">Vídeos</a></li>
+                    <li><a href="#contact" class="btn btn-outline">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section (Fullscreen Cinematic) -->
+        <section id="hero" class="hero-fullscreen">
+            <video class="hero-bg-video" autoplay muted loop playsinline preload="auto" poster="images/thumb-hero.jpg">
+                <source src="videos/hero.mp4" type="video/mp4">
+            </video>
+
+            <div class="hero-overlay"></div>
+            <!-- ... -->
+            <!-- Video Modal -->
+            <div id="videoModal" class="modal-overlay" onclick="closeModal()">
+                <button class="modal-close">&times;</button>
+                <div class="modal-content" onclick="event.stopPropagation()">
+                    <video id="videoPlayer" width="100%" height="100%" controls preload="none">
+                        <source src="" type="video/mp4">
+                        Seu navegador não suporta vídeos HTML5.
+                    </video>
+                </div>
+            </div>
+
+            <div class="container hero-content-wrapper">
+                <div class="hero-content fade-in">
+                    <h1 class="hero-title reveal-text">José Feitosa Jr.</h1>
+
+                    <h2 class="hero-role reveal-text">QA Engineer & Developer</h2>
+
+                    <p class="hero-subtitle text-secondary">
+                        Especialista em validação de fluxos críticos, <br>
+                        autenticação, APIs e automação E2E.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a href="#projects" class="btn">Ver Projetos</a>
+                        <a href="docs/Jose-Feitosa-CV.pdf" download class="btn btn-secondary">Baixar CV</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <script>
+            // Safety fallback: Ensure loader is removed even if external JS fails
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    const l = document.getElementById('loader');
+                    if (l && l.style.display !== 'none') {
+                        l.style.opacity = '0';
+                        setTimeout(() => l.style.display = 'none', 500);
+                    }
+                }, 2000);
+            });
+        </script>
+
+        <!-- Sobre -->
+        <section id="about" class="section">
+            <div class="container" style="text-align: center; max-width: 800px;">
+                <h2 class="section-title">Sobre</h2>
+                <div class="about-content">
+                    <p class="lead" style="font-size: 1.25rem;">Profissional formado em Análise e Desenvolvimento de
+                        Sistemas, com foco em qualidade e automação de testes.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Qualidades Profissionais -->
+        <section id="qualities" class="section">
+            <div class="container">
+                <h2 class="section-title reveal-text">Qualidades Profissionais</h2>
+
+                <div class="qualities-grid fade-in">
+                    <div class="quality-card">Orientado à Qualidade</div>
+                    <div class="quality-card">Atenção a Detalhes</div>
+                    <div class="quality-card">Foco em Automação</div>
+                    <div class="quality-card">Base Técnica Sólida</div>
+                    <div class="quality-card">Autodidata</div>
+                    <div class="quality-card">Comunicação Clara</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills -->
+        <section id="skills" class="section alt-bg">
+            <div class="container">
+                <h2 class="section-title">Tech Stack</h2>
+                <div class="skills-grid">
+                    <div class="skill-card fade-in">
+                        <h3>Testes Manuais</h3>
+                        <ul>
+                            <li>Test Plans</li>
+                            <li>Bug Tracking (Jira)</li>
+                            <li>Exploratory Testing</li>
+                            <li>Usabilidade e UX</li>
+                        </ul>
+                    </div>
+                    <div class="skill-card fade-in">
+                        <h3>Automação</h3>
+                        <ul>
+                            <li>Cypress (JS/PY)</li>
+                            <li>Playwright</li>
+                            <li>Selenium WebDriver</li>
+                            <li>Appium (Mobile)</li>
+                        </ul>
+                    </div>
+                    <div class="skill-card fade-in">
+                        <h3>Ferramentas</h3>
+                        <ul>
+                            <li>Postman / Insomnia</li>
+                            <li>K6 (Performance)</li>
+                            <li>Charles Proxy</li>
+                            <li>BrowserStack</li>
+                        </ul>
+                    </div>
+                    <div class="skill-card fade-in">
+                        <h3>CI/CD & DevOps</h3>
+                        <ul>
+                            <li>GitHub Actions</li>
+                            <li>Jenkins Pipelines</li>
+                            <li>Docker / Kubernetes</li>
+                            <li>Git Flow</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fundamentos (New V2 Section) -->
+        <section id="fundamentals" class="section">
+            <div class="container">
+                <h2 class="section-title reveal-text">Fundamentos</h2>
+                <div class="skills-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+                    <div class="skill-card fade-in"
+                        style="grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 1rem; background: var(--bg-secondary);">
+                        <span class="tag-large">Algoritmos e Complexidade</span>
+                        <span class="tag-large">Estruturas de Dados</span>
+                        <span class="tag-large">Banco de Dados</span>
+                        <span class="tag-large">Arquitetura de Computadores</span>
+                        <span class="tag-large">Redes e APIs</span>
+                        <span class="tag-large">Cloud & DevSecOps</span>
+                        <span class="tag-large">Software Seguro</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projetos -->
+        <section id="projects" class="section">
+            <div class="container">
+                <h2 class="section-title reveal-text">Projetos</h2>
+                <div class="projects-grid">
+                    <!-- Project 1 -->
+                    <a href="https://github.com/jose43jr/Cypress-Proj1-Login-Saucedemo" target="_blank"
+                        class="project-card fade-in">
+                        <div class="project-image"></div>
+                        <div class="project-info">
+                            <h3>Automação Cypress Login – SauceDemo</h3>
+                            <p>Automação completa do fluxo de login utilizando Cypress.</p>
+                            <div class="tags">
+                                <span>Cypress</span>
+                                <span>JavaScript</span>
+                            </div>
+                            <span class="btn-link">Ver Projeto &rarr;</span>
+                        </div>
+                    </a>
+
+                    <!-- Project 2 -->
+                    <a href="https://github.com/jose43jr/Cypress-Proj2-Carrinho-Saucedemo" target="_blank"
+                        class="project-card fade-in">
+                        <div class="project-image"></div>
+                        <div class="project-info">
+                            <h3>Automação Cypress Carrinho – SauceDemo</h3>
+                            <p>Validação do fluxo de adição e remoção de itens no carrinho.</p>
+                            <div class="tags">
+                                <span>Cypress</span>
+                                <span>JavaScript</span>
+                            </div>
+                            <span class="btn-link">Ver Projeto &rarr;</span>
+                        </div>
+                    </a>
+
+                    <!-- Project 3 -->
+                    <a href="https://github.com/jose43jr/Postman-Proj3-API-SauceDemo" target="_blank"
+                        class="project-card fade-in">
+                        <div class="project-image"></div>
+                        <div class="project-info">
+                            <h3>Testes de API – SauceDemo</h3>
+                            <p>Validação de endpoints e contratos de API com Postman.</p>
+                            <div class="tags">
+                                <span>Postman</span>
+                            </div>
+                            <span class="btn-link">Ver Projeto &rarr;</span>
+                        </div>
+                    </a>
+
+                    <!-- Project 4 -->
+                    <a href="https://github.com/jose43jr/Appium-projeto-09-saucedemo" target="_blank"
+                        class="project-card fade-in">
+                        <div class="project-image"></div>
+                        <div class="project-info">
+                            <h3>Automação Web Mobile – Appium</h3>
+                            <p>Testes automatizados em dispositivos móveis Android.</p>
+                            <div class="tags">
+                                <span>Appium</span>
+                                <span>Python</span>
+                            </div>
+                            <span class="btn-link">Ver Projeto &rarr;</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vídeos (New Section) -->
+        <section id="videos" class="section alt-bg">
+            <div class="container">
+                <h2 class="section-title reveal-text">Demonstrações</h2>
+                <div class="video-grid">
+                    <div class="video-card fade-in" onclick="openModal('videos/cypress-login.mp4')">
+                        <div class="video-thumbnail">
+                            <div class="play-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                    <path d="M8 5v14l11-7z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <h3>Login Flow (Cypress)</h3>
+                        </div>
+                    </div>
+                    <div class="video-card fade-in" onclick="openModal('videos/cypress-carrinho.mp4')">
+                        <div class="video-thumbnail">
+                            <div class="play-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                    <path d="M8 5v14l11-7z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <h3>Carrinho Flow (Cypress)</h3>
+                        </div>
+                    </div>
+                    <div class="video-card fade-in" onclick="openModal('videos/postman.mp4')">
+                        <div class="video-thumbnail">
+                            <div class="play-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                    <path d="M8 5v14l11-7z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <h3>API Testing (Postman)</h3>
+                        </div>
+                    </div>
+                    <div class="video-card fade-in" onclick="openModal('videos/appium-mobile.mp4')">
+                        <div class="video-thumbnail">
+                            <div class="play-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                    <path d="M8 5v14l11-7z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <h3>Mobile Automation (Appium)</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Metodologia (Timeline) -->
+        <section id="methodology" class="section alt-bg">
+            <div class="container">
+                <h2 class="section-title reveal-text" style="text-align: center; display: block;">Minha
+                    Metodologia</h2>
+                <div class="timeline">
+                    <div class="timeline-item fade-in">
+                        <div class="timeline-dot"></div>
+                        <h3>Análise de Risco</h3>
+                        <p>Identificação de pontos críticos e impacto no negócio.</p>
+                    </div>
+                    <div class="timeline-item fade-in">
+                        <div class="timeline-dot"></div>
+                        <h3>Cenários</h3>
+                        <p>Definição de cobertura de testes e massa de dados.</p>
+                    </div>
+                    <div class="timeline-item fade-in">
+                        <div class="timeline-dot"></div>
+                        <h3>Automação</h3>
+                        <p>Desenvolvimento dos scripts e pipeline de CI/CD.</p>
+                    </div>
+                    <div class="timeline-item fade-in">
+                        <div class="timeline-dot"></div>
+                        <h3>Evidências</h3>
+                        <p>Coleta automática de logs, screenshots e vídeos.</p>
+                    </div>
+                    <div class="timeline-item fade-in">
+                        <div class="timeline-dot"></div>
+                        <h3>Relatório</h3>
+                        <p>Feedback claro e acionável para a equipe de desenvolvimento.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- CTA Final & Contact -->
+        <section id="cta_final" class="section cta-section">
+            <div class="container">
+                <h2 style="margin-bottom: 2.5rem; font-weight: 700;">Qualidade não é opcional.</h2>
+
+                <div class="footer-highlight">
+                    <h3 style="font-size: 2rem; margin-bottom: 1.5rem; color: #fff;">José Feitosa Jr.</h3>
+
+                    <div class="footer-links-vertical"
+                        style="display: flex; flex-direction: column; gap: 1rem; align-items: center;">
+                        <a href="mailto:qatestssoftware@gmail.com" class="contact-link">qatestssoftware@gmail.com</a>
+
+                        <div class="social-row" style="display: flex; gap: 2rem; margin-top: 0.5rem;">
+                            <a href="https://github.com/jose43jr" target="_blank" class="contact-link">GitHub</a>
+                            <a href="https://www.linkedin.com/in/joséfeitosa45" target="_blank"
+                                class="contact-link">LinkedIn</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer Copyright Only -->
+        <footer>
+            <div class="container"
+                style="text-align: center; padding: 1.5rem 0; color: var(--text-secondary); font-size: 0.9rem;">
+                <p>&copy; 2024 QA Engineer. Todos os direitos reservados.</p>
+            </div>
+        </footer>
+
+        <!-- Video Modal -->
+        <div id="videoModal" class="modal-overlay" onclick="closeModal()">
+            <button class="modal-close">&times;</button>
+            <div class="modal-content" onclick="event.stopPropagation()">
+                <video id="videoPlayer" width="100%" height="100%" controls>
+                    <source src="" type="video/mp4">
+                    Seu navegador não suporta vídeos HTML5.
+                </video>
+            </div>
+        </div>
+
+        <!-- Scripts -->
+        <script src="js/app.js"></script>
+</body>
+
+</html>
