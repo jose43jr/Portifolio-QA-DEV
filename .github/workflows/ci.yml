@@ -1,5 +1,5 @@
 
-name: CI Portfolio Check
+name: CI Portfolio Check & Deploy
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
     branches: [ "main", "master" ]
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,3 +22,20 @@ jobs:
 
       - name: Run Link Checker
         run: python execution/check_links.py
+
+      - name: Deploy to Hostinger via FTP
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./
+          server-dir: /public_html/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/execution/**
+            **/directives/**
+            **/.env
