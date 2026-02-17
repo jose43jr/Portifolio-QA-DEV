@@ -24,7 +24,7 @@ jobs:
         run: python execution/check_links.py
 
       - name: Deploy to Hostinger via FTP
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && secrets.FTP_SERVER != ''
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
           server: ${{ secrets.FTP_SERVER }}
