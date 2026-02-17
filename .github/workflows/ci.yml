@@ -1,4 +1,3 @@
-
 name: CI Portfolio Check & Deploy
 
 on:
@@ -10,6 +9,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - name: Checkout repository
@@ -23,8 +23,18 @@ jobs:
       - name: Run Link Checker
         run: python execution/check_links.py
 
+      - name: Validate FTP Secrets
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          if [ -z "${{ secrets.FTP_SERVER }}" ] || \
+             [ -z "${{ secrets.FTP_USERNAME }}" ] || \
+             [ -z "${{ secrets.FTP_PASSWORD }}" ]; then
+            echo "FTP secrets not configured."
+            exit 1
+          fi
+
       - name: Deploy to Hostinger via FTP
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && secrets.FTP_SERVER != ''
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -38,4 +48,3 @@ jobs:
             **/node_modules/**
             **/execution/**
             **/directives/**
-            **/.env
