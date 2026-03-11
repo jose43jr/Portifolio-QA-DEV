@@ -52,12 +52,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Loader Logic
     const loader = document.getElementById('loader');
     if (loader) {
-        setTimeout(() => {
+        requestAnimationFrame(() => {
             loader.style.opacity = '0';
             setTimeout(() => {
                 loader.style.display = 'none';
-            }, 500);
-        }, 1000); // 1s simulating delay or wait for content
+            }, 250);
+        });
     }
 
     // 2. Scroll Progress Bar
@@ -237,7 +237,7 @@ if (logoSpan) {
 
 // 6. Magnetic Buttons (High-End UX)
 // Select buttons to apply the effect
-const magneticButtons = document.querySelectorAll('.btn, .btn-link, .nav-links a');
+const magneticButtons = document.querySelectorAll('.btn-link');
 
 magneticButtons.forEach(btn => {
     btn.addEventListener('mousemove', (e) => {

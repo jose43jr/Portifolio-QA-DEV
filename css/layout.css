@@ -94,11 +94,13 @@ header.scrolled {
 /* ---- Hero ---- */
 .hero-fullscreen {
     position: relative;
-    height: 100vh;
+    min-height: 100vh;
+    min-height: 100svh;
     overflow: hidden;
     display: flex;
     align-items: center;
     background-color: #000;
+    padding: calc(var(--header-height) + 24px) 0 40px;
 }
 
 .hero-bg-video {
@@ -116,7 +118,9 @@ header.scrolled {
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.8) 40%, rgba(0, 0, 0, 0) 100%);
+    background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0.32) 0%, rgba(0, 0, 0, 0.55) 100%),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.94) 0%, rgba(0, 0, 0, 0.78) 42%, rgba(0, 0, 0, 0.22) 100%);
     z-index: 2;
 }
 
@@ -139,17 +143,19 @@ header.scrolled {
     font-size: var(--h1-size);
     font-weight: 800;
     line-height: 1.1;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     color: var(--text-primary);
     text-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    letter-spacing: -0.04em;
 }
 
 .hero-subtitle {
-    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-size: clamp(1rem, 1vw + 0.95rem, 1.2rem);
     color: var(--text-secondary);
     margin-bottom: 2rem;
-    max-width: 480px;
-    line-height: 1.6;
+    max-width: 540px;
+    line-height: 1.55;
+    text-wrap: balance;
 }
 
 .hero-actions {
@@ -158,10 +164,11 @@ header.scrolled {
 }
 
 .hero-role {
-    font-size: 1.8rem;
+    font-size: clamp(1.2rem, 1vw + 1rem, 1.65rem);
     color: var(--accent-primary);
     font-weight: 600;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.01em;
 }
 
 /* ---- Grid Layouts ---- */
@@ -323,12 +330,34 @@ header.scrolled {
         text-align: center;
     }
 
+    .hero-fullscreen {
+        align-items: flex-end;
+        padding: calc(var(--header-height) + 16px) 0 32px;
+    }
+
+    .hero-overlay {
+        background:
+            linear-gradient(180deg, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.52) 38%, rgba(0, 0, 0, 0.92) 100%),
+            linear-gradient(90deg, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.34) 100%);
+    }
+
     .hero-stats {
         justify-content: center;
+        gap: 1.25rem;
     }
 
     .stat-item {
         align-items: center;
+    }
+
+    .hero-subtitle {
+        max-width: 32ch;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-role {
+        margin-bottom: 0.5rem;
     }
 
     .navbar {
