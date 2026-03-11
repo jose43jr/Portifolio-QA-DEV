@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         hamburger.addEventListener('click', () => {
             // Toggle Nav
             nav.classList.toggle('nav-active');
+            hamburger.setAttribute('aria-expanded', String(nav.classList.contains('nav-active')));
 
             // Animate Links
             navLinks.forEach((link, index) => {
@@ -39,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
             link.addEventListener('click', () => {
                 nav.classList.remove('nav-active');
                 hamburger.classList.remove('toggle');
+                hamburger.setAttribute('aria-expanded', 'false');
 
                 navLinks.forEach((link) => {
                     link.style.animation = '';
@@ -69,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Parallax Effect for Hero Video (Simple)
-        const heroVideo = document.querySelector('.hero-video');
+        const heroVideo = document.querySelector('.hero-bg-video');
         if (heroVideo && scrollTop < 600) {
             heroVideo.style.transform = `translateY(${scrollTop * 0.4}px)`;
         }
@@ -239,6 +241,8 @@ const magneticButtons = document.querySelectorAll('.btn, .btn-link, .nav-links a
 
 magneticButtons.forEach(btn => {
     btn.addEventListener('mousemove', (e) => {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
         const rect = btn.getBoundingClientRect();
         const x = e.clientX - rect.left - rect.width / 2;
         const y = e.clientY - rect.top - rect.height / 2;

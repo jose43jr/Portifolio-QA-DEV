@@ -37,11 +37,11 @@
             <nav class="navbar">
                 <div class="logo">PORTFOLIO<span class="text-accent">.QA</span></div>
 
-                <div class="hamburger">
+                <button class="hamburger" type="button" aria-label="Abrir menu de navegação" aria-expanded="false">
                     <div class="line1"></div>
                     <div class="line2"></div>
                     <div class="line3"></div>
-                </div>
+                </button>
 
                 <ul class="nav-links">
                     <li><a href="#about">Sobre</a></li>
@@ -61,7 +61,7 @@
 
         <!-- Hero Section (Fullscreen Cinematic) -->
         <section id="hero" class="hero-fullscreen">
-            <video class="hero-bg-video" autoplay muted loop playsinline preload="auto" poster="images/thumb-hero.jpg">
+            <video class="hero-bg-video" autoplay muted loop playsinline preload="auto">
                 <source src="videos/hero.mp4" type="video/mp4">
             </video>
 
@@ -145,32 +145,56 @@
 
                 <div class="qualities-grid">
                     <div class="quality-card">
-                        <span class="quality-icon">🎯</span>
+                        <span class="quality-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 3a9 9 0 1 0 9 9h-2a7 7 0 1 1-7-7V3zm0 4a5 5 0 1 0 5 5h-2a3 3 0 1 1-3-3V7zm0-7 7 7h-4v4l-7-7h4V0z"/>
+                            </svg>
+                        </span>
                         <p class="quality-title">Orientado à Qualidade</p>
                         <p class="quality-desc">Foco em entregar software sem defeitos críticos</p>
                     </div>
                     <div class="quality-card">
-                        <span class="quality-icon">🔍</span>
+                        <span class="quality-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M10 2a8 8 0 1 0 4.9 14.3l4.4 4.4 1.4-1.4-4.4-4.4A8 8 0 0 0 10 2zm0 2a6 6 0 1 1 0 12 6 6 0 0 1 0-12z"/>
+                            </svg>
+                        </span>
                         <p class="quality-title">Atenção a Detalhes</p>
                         <p class="quality-desc">Identificação precisa de falhas e edge cases</p>
                     </div>
                     <div class="quality-card">
-                        <span class="quality-icon">⚡</span>
+                        <span class="quality-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/>
+                            </svg>
+                        </span>
                         <p class="quality-title">Foco em Automação</p>
                         <p class="quality-desc">Pipelines CI/CD com cobertura E2E robusta</p>
                     </div>
                     <div class="quality-card">
-                        <span class="quality-icon">🧠</span>
+                        <span class="quality-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M9 2a4 4 0 0 0-3.9 3.1A4.5 4.5 0 0 0 2 9.5 4.5 4.5 0 0 0 5.5 14v1A4 4 0 0 0 9 19h1v-7H7V10h3V7H8V5h2.4A3 3 0 0 1 13 2h-4zm5 0a4 4 0 0 1 3.9 3.1A4.5 4.5 0 0 1 22 9.5 4.5 4.5 0 0 1 18.5 14v1A4 4 0 0 1 15 19h-1v-7h3V10h-3V7h2V5h-2.4A3 3 0 0 0 11 2h3z"/>
+                            </svg>
+                        </span>
                         <p class="quality-title">Base Técnica Sólida</p>
                         <p class="quality-desc">Formação em ADS com experiência prática</p>
                     </div>
                     <div class="quality-card">
-                        <span class="quality-icon">📚</span>
+                        <span class="quality-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M4 3h7a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4V3zm16 0h-7a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h8V3z"/>
+                            </svg>
+                        </span>
                         <p class="quality-title">Autodidata</p>
                         <p class="quality-desc">Aprendizado contínuo de novas tecnologias</p>
                     </div>
                     <div class="quality-card">
-                        <span class="quality-icon">💬</span>
+                        <span class="quality-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M4 4h16v11H7l-3 3V4zm2 2v7.2L6.2 13H18V6H6z"/>
+                            </svg>
+                        </span>
                         <p class="quality-title">Comunicação Clara</p>
                         <p class="quality-desc">Relatórios objetivos e feedbacks acionáveis</p>
                     </div>
@@ -248,7 +272,11 @@
                 <h2 class="section-title reveal-text" style="text-align: center;">Certificações</h2>
                 <div class="certifications-grid">
                     <div class="cert-card fade-in">
-                        <div class="cert-icon">🎓</div>
+                        <div class="cert-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 3 1 8l11 5 9-4.1V17h2V8L12 3zm-6 8.7V15c0 2.2 2.7 4 6 4s6-1.8 6-4v-3.3l-6 2.7-6-2.7z"/>
+                            </svg>
+                        </div>
                         <div class="cert-body">
                             <p class="cert-name">Cypress do Zero ao Avançado</p>
                             <p class="cert-issuer">Udemy</p>
@@ -256,7 +284,11 @@
                         </div>
                     </div>
                     <div class="cert-card fade-in">
-                        <div class="cert-icon">🎓</div>
+                        <div class="cert-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 3 1 8l11 5 9-4.1V17h2V8L12 3zm-6 8.7V15c0 2.2 2.7 4 6 4s6-1.8 6-4v-3.3l-6 2.7-6-2.7z"/>
+                            </svg>
+                        </div>
                         <div class="cert-body">
                             <p class="cert-name">Appium Mobile Automation</p>
                             <p class="cert-issuer">Udemy</p>
@@ -264,7 +296,11 @@
                         </div>
                     </div>
                     <div class="cert-card fade-in">
-                        <div class="cert-icon">🎓</div>
+                        <div class="cert-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 3 1 8l11 5 9-4.1V17h2V8L12 3zm-6 8.7V15c0 2.2 2.7 4 6 4s6-1.8 6-4v-3.3l-6 2.7-6-2.7z"/>
+                            </svg>
+                        </div>
                         <div class="cert-body">
                             <p class="cert-name">Postman API Testing</p>
                             <p class="cert-issuer">Postman Academy</p>
@@ -272,7 +308,11 @@
                         </div>
                     </div>
                     <div class="cert-card fade-in">
-                        <div class="cert-icon">🎓</div>
+                        <div class="cert-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 3 1 8l11 5 9-4.1V17h2V8L12 3zm-6 8.7V15c0 2.2 2.7 4 6 4s6-1.8 6-4v-3.3l-6 2.7-6-2.7z"/>
+                            </svg>
+                        </div>
                         <div class="cert-body">
                             <p class="cert-name">Análise e Desenvolvimento de Sistemas</p>
                             <p class="cert-issuer">Faculdade</p>
@@ -292,7 +332,11 @@
                     <a href="https://github.com/jose43jr/Cypress-Proj1-Login-Saucedemo" target="_blank"
                         class="project-card fade-in">
                         <div class="project-image" style="background: linear-gradient(135deg, #1a0a0e 0%, #3d1520 100%);">
-                            <span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:rgba(255,255,255,0.5);font-size:2.5rem;">🔐</span>
+                            <span class="project-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M17 10V7a5 5 0 0 0-10 0v3H5v11h14V10h-2zm-8 0V7a3 3 0 0 1 6 0v3H9zm3 4a2 2 0 0 1 1 3.7V19h-2v-1.3A2 2 0 0 1 12 14z"/>
+                                </svg>
+                            </span>
                         </div>
                         <div class="project-info">
                             <h3>Automação Cypress Login – SauceDemo</h3>
@@ -309,7 +353,11 @@
                     <a href="https://github.com/jose43jr/Cypress-Proj2-Carrinho-Saucedemo" target="_blank"
                         class="project-card fade-in">
                         <div class="project-image" style="background: linear-gradient(135deg, #0a1520 0%, #153d20 100%);">
-                            <span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:rgba(255,255,255,0.5);font-size:2.5rem;">🛒</span>
+                            <span class="project-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M7 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm10 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM3 4h2l2.2 9.2A2 2 0 0 0 9.1 15H18a2 2 0 0 0 1.9-1.4L22 7H7.4l-.5-2H3V4z"/>
+                                </svg>
+                            </span>
                         </div>
                         <div class="project-info">
                             <h3>Automação Cypress Carrinho – SauceDemo</h3>
@@ -326,7 +374,11 @@
                     <a href="https://github.com/jose43jr/Postman-Proj3-API-SauceDemo" target="_blank"
                         class="project-card fade-in">
                         <div class="project-image" style="background: linear-gradient(135deg, #1a1a0a 0%, #3d3510 100%);">
-                            <span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:rgba(255,255,255,0.5);font-size:2.5rem;">🛰️</span>
+                            <span class="project-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="m10.6 13.4 2-2 5 5-2 2-5-5zM14 4l6 6-2.5 2.5-6-6L14 4zM6 14l4 4-3 3a2.8 2.8 0 0 1-4-4l3-3zm9.5-9.5 1.4-1.4a3 3 0 1 1 4.2 4.2l-1.4 1.4-4.2-4.2z"/>
+                                </svg>
+                            </span>
                         </div>
                         <div class="project-info">
                             <h3>Testes de API – SauceDemo</h3>
@@ -342,7 +394,11 @@
                     <a href="https://github.com/jose43jr/Appium-projeto-09-saucedemo" target="_blank"
                         class="project-card fade-in">
                         <div class="project-image" style="background: linear-gradient(135deg, #0a0f1a 0%, #102035 100%);">
-                            <span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:rgba(255,255,255,0.5);font-size:2.5rem;">📱</span>
+                            <span class="project-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M8 2h8a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 3v14h8V5H8zm4 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                                </svg>
+                            </span>
                         </div>
                         <div class="project-info">
                             <h3>Automação Web Mobile – Appium</h3>
@@ -363,58 +419,62 @@
             <div class="container">
                 <h2 class="section-title reveal-text" style="text-align: center;">Demonstrações</h2>
                 <div class="video-grid">
-                    <div class="video-card fade-in" onclick="openModal('videos/cypress-login.mp4')">
-                        <div class="video-thumbnail" style="background-image: url('images/thumb-cypress-login.jpg');">
+                    <button type="button" class="video-card video-card-cypress fade-in" onclick="openModal('videos/cypress-login.mp4')" aria-label="Abrir vídeo Login Flow em Cypress">
+                        <div class="video-thumbnail">
                             <div class="play-icon">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
                                     <path d="M8 5v14l11-7z" />
                                 </svg>
                             </div>
+                            <span class="video-badge">Cypress</span>
                         </div>
                         <div class="video-info">
                             <h3>Login Flow (Cypress)</h3>
                             <p style="font-size:0.85rem;color:var(--text-secondary);margin-top:4px;">Automação E2E • Cypress</p>
                         </div>
-                    </div>
-                    <div class="video-card fade-in" onclick="openModal('videos/cypress-carrinho.mp4')">
-                        <div class="video-thumbnail" style="background-image: url('images/thumb-cypress-carrinho.jpg');">
+                    </button>
+                    <button type="button" class="video-card video-card-cart fade-in" onclick="openModal('videos/cypress-carrinho.mp4')" aria-label="Abrir vídeo Carrinho Flow em Cypress">
+                        <div class="video-thumbnail">
                             <div class="play-icon">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
                                     <path d="M8 5v14l11-7z" />
                                 </svg>
                             </div>
+                            <span class="video-badge">Cart Flow</span>
                         </div>
                         <div class="video-info">
                             <h3>Carrinho Flow (Cypress)</h3>
                             <p style="font-size:0.85rem;color:var(--text-secondary);margin-top:4px;">Automação E2E • Cypress</p>
                         </div>
-                    </div>
-                    <div class="video-card fade-in" onclick="openModal('videos/postman.mp4')">
-                        <div class="video-thumbnail" style="background-image: url('images/thumb-postman.jpg');">
+                    </button>
+                    <button type="button" class="video-card video-card-api fade-in" onclick="openModal('videos/postman.mp4')" aria-label="Abrir vídeo API Testing em Postman">
+                        <div class="video-thumbnail">
                             <div class="play-icon">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
                                     <path d="M8 5v14l11-7z" />
                                 </svg>
                             </div>
+                            <span class="video-badge">API</span>
                         </div>
                         <div class="video-info">
                             <h3>API Testing (Postman)</h3>
                             <p style="font-size:0.85rem;color:var(--text-secondary);margin-top:4px;">API Validation • Postman</p>
                         </div>
-                    </div>
-                    <div class="video-card fade-in" onclick="openModal('videos/appium-mobile.mp4')">
-                        <div class="video-thumbnail" style="background-image: url('images/thumb-appium.jpg');">
+                    </button>
+                    <button type="button" class="video-card video-card-mobile fade-in" onclick="openModal('videos/appium-mobile.mp4')" aria-label="Abrir vídeo Mobile Automation em Appium">
+                        <div class="video-thumbnail">
                             <div class="play-icon">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
                                     <path d="M8 5v14l11-7z" />
                                 </svg>
                             </div>
+                            <span class="video-badge">Mobile</span>
                         </div>
                         <div class="video-info">
                             <h3>Mobile Automation (Appium)</h3>
                             <p style="font-size:0.85rem;color:var(--text-secondary);margin-top:4px;">Android • Appium + Python</p>
                         </div>
-                    </div>
+                    </button>
                 </div>
             </div>
         </section>
@@ -472,13 +532,13 @@
                             </svg>
                             qatestssoftware@gmail.com
                         </a>
-                        <a href="https://github.com/jose43jr" target="_blank" class="social-link">
+                        <a href="https://github.com/jose43jr" target="_blank" rel="noreferrer" class="social-link">
                             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
                             </svg>
                             GitHub
                         </a>
-                        <a href="https://www.linkedin.com/in/joséfeitosa45" target="_blank" class="social-link">
+                        <a href="https://www.linkedin.com/in/joséfeitosa45" target="_blank" rel="noreferrer" class="social-link">
                             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                             </svg>

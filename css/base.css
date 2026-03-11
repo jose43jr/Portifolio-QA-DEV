@@ -62,6 +62,22 @@ a {
     transition: color 0.3s ease;
 }
 
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+:focus {
+    outline: none;
+}
+
+:focus-visible {
+    outline: 2px solid rgba(139, 30, 45, 0.95);
+    outline-offset: 3px;
+}
+
 ul {
     list-style: none;
 }
