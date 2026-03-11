@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, observerOptions);
 
     // Targets to animate (Grids)
-    const staggerGrids = document.querySelectorAll('.qualities-grid, .skills-grid, .projects-grid, .video-grid, .testimonials-grid, .timeline');
+    const staggerGrids = document.querySelectorAll('.qualities-grid, .skills-grid, .projects-grid, .video-grid, .testimonials-grid, .methodology-grid');
     staggerGrids.forEach(grid => {
         // Ensure children are hidden initially
         Array.from(grid.children).forEach(child => {

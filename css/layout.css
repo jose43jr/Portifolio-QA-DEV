@@ -109,7 +109,7 @@ header.scrolled {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center center;
+    object-position: center 18%;
     z-index: 1;
     animation: heroZoom 2s ease-out forwards;
     opacity: 0;
@@ -196,6 +196,12 @@ header.scrolled {
     gap: var(--spacing-md);
 }
 
+.methodology-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--spacing-md);
+}
+
 .qualities-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -208,7 +214,8 @@ header.scrolled {
 .qualities-grid,
 .skills-grid,
 .projects-grid,
-.video-grid {
+.video-grid,
+.methodology-grid {
     overflow: visible;
 }
 
@@ -341,6 +348,10 @@ header.scrolled {
             linear-gradient(90deg, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.34) 100%);
     }
 
+    .hero-bg-video {
+        object-position: center 12%;
+    }
+
     .hero-stats {
         justify-content: center;
         gap: 1.25rem;
@@ -366,11 +377,6 @@ header.scrolled {
         padding: 0 1rem;
     }
 
-    .timeline::before { left: 20px; }
-
-    .timeline-item { padding-left: 50px; }
-
-    .timeline-dot { left: 11px; }
 }
 
 .nav-active { transform: translateX(0%) !important; }

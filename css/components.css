@@ -333,55 +333,59 @@
     line-height: 1.4;
 }
 
-/* ---- Timeline ---- */
-.timeline {
+/* ---- Methodology ---- */
+.methodology-intro {
+    max-width: 760px;
+    margin: 0 auto var(--spacing-md);
+    text-align: center;
+    font-size: 1.05rem;
+}
+
+.method-card {
     position: relative;
-    max-width: 800px;
-    margin: 0 auto;
+    padding: 28px 24px 24px;
+    border-radius: var(--radius-md);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%),
+        var(--bg-primary);
+    border: 1px solid var(--border-color);
+    min-height: 220px;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.timeline::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 2px;
-    height: 100%;
-    background-color: var(--border-color);
+.method-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(139, 30, 45, 0.6);
+    box-shadow: 0 14px 36px -16px rgba(0, 0, 0, 0.55);
 }
 
-.timeline-item {
-    padding: var(--spacing-md);
-    position: relative;
-    width: 50%;
+.method-step {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 48px;
+    height: 30px;
+    padding: 0 10px;
+    border-radius: 999px;
+    margin-bottom: 18px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--accent-primary);
+    background: rgba(139, 30, 45, 0.12);
+    border: 1px solid rgba(139, 30, 45, 0.3);
 }
 
-.timeline-item:nth-child(odd) {
-    left: 0;
-    text-align: right;
-    padding-right: 40px;
+.method-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
 }
 
-.timeline-item:nth-child(even) {
-    left: 50%;
-    text-align: left;
-    padding-left: 40px;
-}
-
-.timeline-dot {
-    width: 18px;
-    height: 18px;
-    background-color: var(--accent-primary);
-    border-radius: 50%;
-    position: absolute;
-    top: 30px;
-    right: -9px;
-    border: 4px solid var(--bg-secondary);
-}
-
-.timeline-item:nth-child(even) .timeline-dot {
-    right: auto;
-    left: -9px;
+.method-card p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
 }
 
 /* ---- Methodology Steps ---- */
