@@ -70,12 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
             progressBar.style.width = scrollPercent + '%';
         }
 
-        // Parallax Effect for Hero Video (Simple)
-        const heroVideo = document.querySelector('.hero-bg-video');
-        if (heroVideo && scrollTop < 600) {
-            const parallaxOffset = window.innerWidth <= 768 ? scrollTop * 0.18 : scrollTop * 0.08;
-            heroVideo.style.setProperty('--hero-parallax-y', `${parallaxOffset}px`);
-        }
     });
 
     // Smooth Scroll for anchor links
