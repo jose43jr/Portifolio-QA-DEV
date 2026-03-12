@@ -46,11 +46,11 @@
 /* ---- Hero Zoom ---- */
 @keyframes heroZoom {
     from {
-        transform: scale(var(--hero-scale-start, 1.1));
+        transform: translateY(calc(var(--hero-base-translate-y, 0px) + var(--hero-parallax-y, 0px))) scale(var(--hero-scale-start, 1.1));
         opacity: 0;
     }
     to {
-        transform: scale(var(--hero-scale-end, 1));
+        transform: translateY(calc(var(--hero-base-translate-y, 0px) + var(--hero-parallax-y, 0px))) scale(var(--hero-scale-end, 1));
         opacity: 1;
     }
 }

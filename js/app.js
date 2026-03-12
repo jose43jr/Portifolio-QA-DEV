@@ -73,7 +73,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Parallax Effect for Hero Video (Simple)
         const heroVideo = document.querySelector('.hero-bg-video');
         if (heroVideo && scrollTop < 600) {
-            heroVideo.style.transform = `translateY(${scrollTop * 0.4}px)`;
+            const parallaxOffset = window.innerWidth <= 768 ? scrollTop * 0.18 : scrollTop * 0.08;
+            heroVideo.style.setProperty('--hero-parallax-y', `${parallaxOffset}px`);
         }
     });
 
