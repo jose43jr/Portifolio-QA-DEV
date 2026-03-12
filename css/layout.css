@@ -111,14 +111,16 @@ header.scrolled {
     height: auto;
     max-height: calc(100% - 48px);
     z-index: 1;
-    --hero-scale-start: 0.96;
-    --hero-scale-end: 0.94;
+    object-fit: cover;
+    object-position: top center; /* Garante que o topo não seja cortado */
+    --hero-scale-start: 1;
+    --hero-scale-end: 0.98;
     --hero-base-translate-y: -50%;
     --hero-parallax-y: 0px;
     animation: heroZoom 2s ease-out forwards;
     opacity: 0;
     transform: translateY(calc(var(--hero-base-translate-y) + var(--hero-parallax-y))) scale(var(--hero-scale-end));
-    transform-origin: center center;
+    transform-origin: top center;
 }
 
 .hero-overlay {
@@ -361,8 +363,8 @@ header.scrolled {
         height: 100%;
         max-height: none;
         object-fit: cover;
-        object-position: center 12%;
-        --hero-scale-start: 1.04;
+        object-position: center 5%; /* Focado no topo para evitar corte da cabeça */
+        --hero-scale-start: 1.05;
         --hero-scale-end: 1;
         --hero-base-translate-y: 0px;
         --hero-parallax-y: 0px;
