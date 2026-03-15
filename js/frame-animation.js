@@ -11,14 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const frameCount = 147;
     const framePath = 'frame a frame/frame';
     const extension = '.png';
-    const fps = 30; // Target frames per second
-    const frameDuration = 1000 / fps;
     
     // State
     const frames = [];
     let currentFrame = 1;
-    let isPlaying = false;
-    let lastRenderTime = 0;
+    let isImagesLoaded = false;
     
     // Load images
     const loadImages = () => {
@@ -32,11 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
             
             img.onload = () => {
                 loadedCount++;
-                // Start animation once we have a decent chunk of frames to prevent initial stuttering
-                if (loadedCount === 10 && !isPlaying) {
-                     // First draw to show something immediately
-                     drawFrame(frames[currentFrame]);
-                     startAnimation();
+                
+                // Once a reasonable amount of frames is loaded, we can allow scrolling updates
+                if (loadedCount >= 10 && !isImagesLoaded) {
+                    isImagesLoaded = true;
+                    updateFrameOnScroll(); // Initial draw based on current scroll
                 }
                 
                 // If the very first frame loads, draw it immediately to avoid empty space
@@ -82,33 +79,52 @@ document.addEventListener('DOMContentLoaded', () => {
          ctx.drawImage(img, 0, 0, iWidth, iHeight, offsetX, offsetY, newWidth, newHeight);
     };
     
-    const animate = (timestamp) => {
-        if (!isPlaying) return;
+    // Scroll Logic
+    const updateFrameOnScroll = () => {
+        if (!isImagesLoaded) return;
         
-        requestAnimationFrame(animate);
+        // Calculate the container bounds (the hero section)
+        const heroSection = document.getElementById('hero');
+        if (!heroSection) return;
         
-        const delta = timestamp - lastRenderTime;
+        const rect = heroSection.getBoundingClientRect();
         
-        // Throttling to target FPS
-        if (delta > frameDuration) {
-            lastRenderTime = timestamp - (delta % frameDuration);
-            
-            if (frames[currentFrame] && frames[currentFrame].complete) {
-                drawFrame(frames[currentFrame]);
-            }
-            
-            currentFrame++;
-            if (currentFrame > frameCount) {
-                currentFrame = 1; // Loop back
-            }
+        // When rect.top is 0, we are at the top of the hero section.
+        // We want the animation to progress as we scroll down through the hero section.
+        // The scrollable distance inside the hero is its total height minus the viewport height.
+        const scrollableDistance = rect.height - window.innerHeight;
+        
+        // How far we have scrolled into the hero section (starting from 0 when the top of hero hits the top of viewport)
+        // Note: rect.top is negative as we scroll down
+        const scrolledDistance = -rect.top;
+        
+        let scrollFraction = 0;
+        
+        if (scrolledDistance > 0 && scrollableDistance > 0) {
+            scrollFraction = Math.min(1, scrolledDistance / scrollableDistance);
+        } else if (scrolledDistance <= 0) {
+             scrollFraction = 0;
+        } else {
+             scrollFraction = 1;
+        }
+
+        // Map the fraction to a frame between 1 and frameCount
+        const targetFrame = Math.max(1, Math.min(frameCount, Math.floor(scrollFraction * frameCount) + 1));
+        
+        if (targetFrame !== currentFrame) {
+             currentFrame = targetFrame;
+             
+             // Redraw if the target frame is loaded
+             if (frames[currentFrame] && frames[currentFrame].complete) {
+                 requestAnimationFrame(() => {
+                     drawFrame(frames[currentFrame]);
+                 });
+             }
         }
     };
     
-    const startAnimation = () => {
-        isPlaying = true;
-        lastRenderTime = performance.now();
-        requestAnimationFrame(animate);
-    };
+    // Attach scroll listener
+    window.addEventListener('scroll', updateFrameOnScroll, { passive: true });
     
     // Handle resizing
     const resizeCanvas = () => {

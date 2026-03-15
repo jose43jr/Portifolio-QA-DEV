@@ -94,21 +94,17 @@ header.scrolled {
 /* ---- Hero ---- */
 .hero-fullscreen {
     position: relative;
-    min-height: 100vh;
-    min-height: 100svh;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
+    /* Increase height to allow for scroll room (Scrollytelling). e.g., 200vh gives 100vh of pure scroll while sticky */
+    min-height: 250vh;
     background-color: #000;
-    /* Padding movido para o wrapper interno para evitar bugs de cálculo no Chrome */
 }
 
 .hero-bg-canvas {
-    position: absolute;
+    position: sticky;
     top: 0;
-    right: 0;
+    margin-left: auto;
     width: 50%;
-    height: 100%;
+    height: 100vh;
     z-index: 1;
     opacity: 0;
     transform-origin: center top;
@@ -157,12 +153,18 @@ header.scrolled {
 }
 
 .hero-content-wrapper {
-    position: relative;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
     z-index: 3;
     width: 100%;
     max-width: 1400px;
     margin: 0 auto;
-    padding: calc(var(--header-height) + 40px) 0 40px; /* Padding interno para o conteúdo */
+    /* Negative margin to pull it up over the sticky canvas area */
+    margin-top: -100vh;
+    padding: calc(var(--header-height) + 40px) 0 40px;
 }
 
 .hero-content {
@@ -371,6 +373,11 @@ header.scrolled {
     }
 
     .hero-fullscreen {
+        min-height: 200vh; /* A bit less scroll needed on mobile */
+    }
+
+    .hero-content-wrapper {
+        height: 100vh;
         align-items: flex-end;
         padding: calc(var(--header-height) + 16px) 0 32px;
     }
@@ -382,10 +389,11 @@ header.scrolled {
     }
 
     .hero-bg-canvas {
-        position: absolute;
-        inset: 0;
+        position: sticky;
+        top: 0;
+        margin-left: 0;
         width: 100%;
-        height: 100%;
+        height: 100vh;
         z-index: 1;
     }
     
