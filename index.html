@@ -61,17 +61,20 @@
 
         <!-- Hero Section (Fullscreen Cinematic) -->
         <section id="hero" class="hero-fullscreen">
-            <canvas id="hero-frame-canvas" class="hero-bg-canvas"></canvas>
+            <!-- Wrapper for the sticky background elements -->
+            <div class="hero-bg-wrapper">
+                <canvas id="hero-frame-canvas" class="hero-bg-canvas"></canvas>
 
-            <div class="hero-technical-overlay">
-                <div class="scanline"></div>
-                <div class="corner-border top-left"></div>
-                <div class="corner-border top-right"></div>
-                <div class="corner-border bottom-left"></div>
-                <div class="corner-border bottom-right"></div>
+                <div class="hero-technical-overlay">
+                    <div class="scanline"></div>
+                    <div class="corner-border top-left"></div>
+                    <div class="corner-border top-right"></div>
+                    <div class="corner-border bottom-left"></div>
+                    <div class="corner-border bottom-right"></div>
+                </div>
+
+                <div class="hero-overlay"></div>
             </div>
-
-            <div class="hero-overlay"></div>
 
             <!-- Video Modal (Global) -->
             <div id="videoModal" class="modal-overlay" onclick="closeModal()">
