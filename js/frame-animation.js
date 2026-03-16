@@ -13,31 +13,60 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
+    const frameFiles = [
+        'frame00001.png',
+        'frame00006.png',
+        'frame00011.png',
+        'frame00016.png',
+        'frame00021.png',
+        'frame00026.png',
+        'frame00031.png',
+        'frame00036.png',
+        'frame00041.png',
+        'frame00046.png',
+        'frame00051.png',
+        'frame00056.png',
+        'frame00061.png',
+        'frame00066.png',
+        'frame00071.png',
+        'frame00076.png',
+        'frame00081.png',
+        'frame00086.png',
+        'frame00091.png',
+        'frame00096.png',
+        'frame00101.png',
+        'frame00106.png',
+        'frame00111.png',
+        'frame00116.png',
+        'frame00121.png',
+        'frame00126.png',
+        'frame00131.png',
+        'frame00136.png',
+        'frame00141.png'
+    ];
+
     const config = {
-        initialBatchSize: 12,
-        batchSize: 18,
+        frameBasePath: 'frame a frame/',
+        initialBatchSize: 8,
+        batchSize: 8,
         mobileBreakpoint: 768,
-        rootMargin: '200px 0px',
-        variants: [
-            { frameCount: 72, path: 'frame-optimized/frame', extensions: ['avif', 'webp', 'png'] },
-            { frameCount: 147, path: 'frame a frame/frame', extensions: ['avif', 'webp', 'png'] }
-        ]
+        rootMargin: '160px 0px'
     };
 
     const state = {
-        currentFrame: 1,
-        highestRequestedFrame: 0,
+        currentFrameIndex: 0,
+        highestRequestedIndex: -1,
         initialFrameLoaded: false,
         interactiveReady: false,
         isTicking: false,
         hasStartedLoading: false,
-        activeSequence: null,
         reducedMotionQuery: window.matchMedia('(prefers-reduced-motion: reduce)'),
         desktopQuery: window.matchMedia(`(min-width: ${config.mobileBreakpoint + 1}px)`),
         frames: new Map()
     };
 
     const shouldAnimate = () => state.desktopQuery.matches && !state.reducedMotionQuery.matches;
+    const getFrameSrc = (index) => `${config.frameBasePath}${frameFiles[index]}`;
 
     const hideCanvas = () => {
         canvas.classList.add('is-hidden');
@@ -47,100 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const showCanvas = () => {
         canvas.classList.remove('is-hidden');
         poster.classList.add('is-hidden');
-    };
-
-    const getFrameSrc = (frameNumber) => {
-        if (!state.activeSequence) {
-            return null;
-        }
-
-        const paddedIndex = String(frameNumber).padStart(5, '0');
-        return `${state.activeSequence.path}${paddedIndex}.${state.activeSequence.extension}`;
-    };
-
-    const loadProbeImage = (src) => new Promise((resolve) => {
-        const img = new Image();
-        img.decoding = 'async';
-
-        img.addEventListener('load', () => resolve(img), { once: true });
-        img.addEventListener('error', () => resolve(null), { once: true });
-        img.src = src;
-    });
-
-    const resolveActiveSequence = async () => {
-        if (state.activeSequence) {
-            return state.activeSequence;
-        }
-
-        for (const variant of config.variants) {
-            for (const extension of variant.extensions) {
-                const probeSrc = `${variant.path}${String(1).padStart(5, '0')}.${extension}`;
-                const probeImage = await loadProbeImage(probeSrc);
-
-                if (probeImage) {
-                    state.activeSequence = { ...variant, extension };
-                    state.frames.set(1, probeImage);
-                    poster.src = probeSrc;
-                    return state.activeSequence;
-                }
-            }
-        }
-
-        return null;
-    };
-
-    const getFrame = (frameNumber) => {
-        if (state.frames.has(frameNumber)) {
-            return state.frames.get(frameNumber);
-        }
-
-        const frameSrc = getFrameSrc(frameNumber);
-
-        if (!frameSrc) {
-            return null;
-        }
-
-        const img = new Image();
-        img.decoding = 'async';
-        img.loading = 'eager';
-        img.src = frameSrc;
-        state.frames.set(frameNumber, img);
-
-        img.addEventListener('load', () => {
-            if (frameNumber === 1) {
-                state.initialFrameLoaded = true;
-                drawFrame(img);
-            }
-
-            if (!state.interactiveReady && frameNumber <= config.initialBatchSize) {
-                const readyFrames = Array.from({ length: config.initialBatchSize }, (_, index) => index + 1)
-                    .filter((index) => state.frames.get(index)?.complete).length;
-
-                if (readyFrames >= Math.min(8, config.initialBatchSize)) {
-                    state.interactiveReady = true;
-                    renderForCurrentMode();
-                }
-            } else if (frameNumber === state.currentFrame) {
-                drawFrame(img);
-            }
-        }, { once: true });
-
-        return img;
-    };
-
-    const preloadFrames = (start, end) => {
-        if (!state.activeSequence) {
-            return;
-        }
-
-        const boundedStart = Math.max(1, start);
-        const boundedEnd = Math.min(state.activeSequence.frameCount, end);
-
-        for (let frameNumber = boundedStart; frameNumber <= boundedEnd; frameNumber += 1) {
-            getFrame(frameNumber);
-        }
-
-        state.highestRequestedFrame = Math.max(state.highestRequestedFrame, boundedEnd);
     };
 
     const drawFrame = (img) => {
@@ -177,41 +112,78 @@ document.addEventListener('DOMContentLoaded', () => {
         showCanvas();
     };
 
-    const getScrollFrame = () => {
+    const getFrame = (index) => {
+        if (state.frames.has(index)) {
+            return state.frames.get(index);
+        }
+
+        const img = new Image();
+        img.decoding = 'async';
+        img.src = getFrameSrc(index);
+        state.frames.set(index, img);
+
+        img.addEventListener('load', () => {
+            if (index === 0) {
+                state.initialFrameLoaded = true;
+                drawFrame(img);
+            }
+
+            if (!state.interactiveReady && index < config.initialBatchSize) {
+                const readyFrames = Array.from({ length: config.initialBatchSize }, (_, frameIndex) => frameIndex)
+                    .filter((frameIndex) => state.frames.get(frameIndex)?.complete)
+                    .length;
+
+                if (readyFrames >= Math.min(6, config.initialBatchSize)) {
+                    state.interactiveReady = true;
+                    renderForCurrentMode();
+                }
+            } else if (index === state.currentFrameIndex) {
+                drawFrame(img);
+            }
+        }, { once: true });
+
+        return img;
+    };
+
+    const preloadFrames = (startIndex, endIndex) => {
+        const boundedStart = Math.max(0, startIndex);
+        const boundedEnd = Math.min(frameFiles.length - 1, endIndex);
+
+        for (let index = boundedStart; index <= boundedEnd; index += 1) {
+            getFrame(index);
+        }
+
+        state.highestRequestedIndex = Math.max(state.highestRequestedIndex, boundedEnd);
+    };
+
+    const getScrollFrameIndex = () => {
         const rect = heroSection.getBoundingClientRect();
         const scrollableDistance = Math.max(1, rect.height - window.innerHeight);
         const scrolledDistance = Math.min(scrollableDistance, Math.max(0, -rect.top));
         const scrollFraction = scrolledDistance / scrollableDistance;
 
-        return Math.max(
-            1,
-            Math.min(
-                state.activeSequence?.frameCount || 1,
-                Math.round(scrollFraction * ((state.activeSequence?.frameCount || 1) - 1)) + 1
-            )
-        );
+        return Math.max(0, Math.min(frameFiles.length - 1, Math.round(scrollFraction * (frameFiles.length - 1))));
     };
 
-    const ensureFutureFrames = (targetFrame) => {
-        if (!shouldAnimate() || !state.activeSequence) {
+    const ensureFutureFrames = (targetIndex) => {
+        if (!shouldAnimate()) {
             return;
         }
 
-        if (targetFrame + config.batchSize > state.highestRequestedFrame) {
-            preloadFrames(targetFrame, targetFrame + config.batchSize);
+        if (targetIndex + config.batchSize > state.highestRequestedIndex) {
+            preloadFrames(targetIndex, targetIndex + config.batchSize);
         }
     };
 
-    const renderFrame = (targetFrame) => {
-        state.currentFrame = targetFrame;
+    const renderFrame = (targetIndex) => {
+        state.currentFrameIndex = targetIndex;
 
-        const targetImage = getFrame(targetFrame);
+        const targetImage = getFrame(targetIndex);
 
         if (targetImage?.complete) {
             drawFrame(targetImage);
         } else {
-            const fallbackFrame = Math.max(1, targetFrame - 1);
-            const fallbackImage = state.frames.get(fallbackFrame) || state.frames.get(1);
+            const fallbackImage = state.frames.get(Math.max(0, targetIndex - 1)) || state.frames.get(0);
 
             if (fallbackImage?.complete) {
                 drawFrame(fallbackImage);
@@ -220,22 +192,17 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        ensureFutureFrames(targetFrame);
+        ensureFutureFrames(targetIndex);
     };
 
     const renderForCurrentMode = () => {
-        if (!state.initialFrameLoaded) {
-            hideCanvas();
-            return;
-        }
-
-        if (!shouldAnimate()) {
+        if (!state.initialFrameLoaded || !shouldAnimate()) {
             hideCanvas();
             return;
         }
 
         if (!state.interactiveReady) {
-            const firstFrame = state.frames.get(1);
+            const firstFrame = state.frames.get(0);
 
             if (firstFrame?.complete) {
                 drawFrame(firstFrame);
@@ -246,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        renderFrame(getScrollFrame());
+        renderFrame(getScrollFrameIndex());
     };
 
     const onScroll = () => {
@@ -256,44 +223,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
         state.isTicking = true;
         window.requestAnimationFrame(() => {
-            renderFrame(getScrollFrame());
+            renderFrame(getScrollFrameIndex());
             state.isTicking = false;
         });
     };
 
-    const onResize = () => {
-        renderForCurrentMode();
-    };
-
-    const startLoading = async () => {
+    const startLoading = () => {
         if (state.hasStartedLoading || !shouldAnimate()) {
             renderForCurrentMode();
             return;
         }
 
         state.hasStartedLoading = true;
-
-        const sequence = await resolveActiveSequence();
-
-        if (!sequence) {
-            hideCanvas();
-            return;
-        }
-
-        const firstFrame = state.frames.get(1) || getFrame(1);
-
-        if (firstFrame?.complete) {
-            state.initialFrameLoaded = true;
-            drawFrame(firstFrame);
-        }
-
-        preloadFrames(1, config.initialBatchSize);
+        preloadFrames(0, config.initialBatchSize - 1);
         renderForCurrentMode();
     };
 
     hideCanvas();
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onResize, { passive: true });
+    window.addEventListener('resize', renderForCurrentMode, { passive: true });
     state.reducedMotionQuery.addEventListener('change', startLoading);
     state.desktopQuery.addEventListener('change', startLoading);
 
@@ -310,5 +258,6 @@ document.addEventListener('DOMContentLoaded', () => {
         startLoading();
     }
 
+    getFrame(0);
     renderForCurrentMode();
 });

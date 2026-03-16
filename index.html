@@ -11,14 +11,14 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Fira+Code&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
         rel="stylesheet">
 
     <!-- Modular Stylesheets -->
-    <link rel="stylesheet" href="css/base.css?v=20260312-2">
-    <link rel="stylesheet" href="css/layout.css?v=20260312-2">
-    <link rel="stylesheet" href="css/components.css?v=20260312-2">
-    <link rel="stylesheet" href="css/animations.css?v=20260312-2">
+    <link rel="stylesheet" href="css/base.css?v=20260316-1">
+    <link rel="stylesheet" href="css/layout.css?v=20260316-1">
+    <link rel="stylesheet" href="css/components.css?v=20260316-1">
+    <link rel="stylesheet" href="css/animations.css?v=20260316-1">
 </head>
 
 <body>
@@ -63,15 +63,17 @@
         <section id="hero" class="hero-fullscreen">
             <!-- Wrapper for the sticky background elements -->
             <div class="hero-bg-wrapper">
-                <img
-                    id="hero-frame-poster"
-                    class="hero-bg-poster"
-                    src="frame a frame/frame00001.png"
-                    alt=""
-                    decoding="async"
-                    fetchpriority="high"
-                >
-                <canvas id="hero-frame-canvas" class="hero-bg-canvas"></canvas>
+                <div class="hero-frame-stage">
+                    <img
+                        id="hero-frame-poster"
+                        class="hero-bg-poster"
+                        src="frame a frame/frame00001.png"
+                        alt=""
+                        decoding="async"
+                        fetchpriority="high"
+                    >
+                    <canvas id="hero-frame-canvas" class="hero-bg-canvas"></canvas>
+                </div>
 
                 <div class="hero-technical-overlay">
                     <div class="scanline"></div>
@@ -96,42 +98,47 @@
             </div>
 
             <div class="container hero-content-wrapper">
-                <div class="hero-content fade-in">
-                    <h1 class="hero-title reveal-text">José Feitosa Jr.</h1>
+                <div class="hero-content-shell">
+                    <div class="hero-content fade-in">
+                        <p class="hero-eyebrow">Quality Engineering • Automation • Product Confidence</p>
 
-                    <h2 class="hero-role reveal-text">QA Engineer &amp; Developer</h2>
+                        <h1 class="hero-title reveal-text">José Feitosa Jr.</h1>
 
-                    <p class="hero-subtitle text-secondary">
-                        Especialista em validação de fluxos críticos, autenticação, APIs e automação E2E.
-                    </p>
+                        <h2 class="hero-role reveal-text">QA Engineer &amp; Developer</h2>
 
-                    <!-- Quick Stats -->
-                    <div class="hero-stats">
-                        <div class="stat-item">
-                            <span class="stat-value">4+</span>
-                            <span class="stat-label">Projetos</span>
+                        <p class="hero-subtitle text-secondary">
+                            Especialista em validação de fluxos críticos, autenticação, APIs e automação E2E.
+                        </p>
+
+                        <div class="hero-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">4+</span>
+                                <span class="stat-label">Projetos</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">5+</span>
+                                <span class="stat-label">Ferramentas</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">E2E</span>
+                                <span class="stat-label">Coverage</span>
+                            </div>
                         </div>
-                        <div class="stat-item">
-                            <span class="stat-value">5+</span>
-                            <span class="stat-label">Ferramentas</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-value">E2E</span>
-                            <span class="stat-label">Coverage</span>
+
+                        <div class="hero-actions">
+                            <a href="#projects" class="btn">Ver Projetos</a>
+                            <a href="docs/Jose_Feitosa_QA.pdf" download="Jose_Feitosa_QA.pdf" class="btn btn-secondary btn-cv">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: middle;">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7 10 12 15 17 10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                                Baixar Currículo
+                            </a>
                         </div>
                     </div>
 
-                    <div class="hero-actions">
-                        <a href="#projects" class="btn">Ver Projetos</a>
-                        <a href="docs/Jose_Feitosa_QA.pdf" download="Jose_Feitosa_QA.pdf" class="btn btn-secondary btn-cv">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: middle;">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                <polyline points="7 10 12 15 17 10"></polyline>
-                                <line x1="12" y1="15" x2="12" y2="3"></line>
-                            </svg>
-                            Baixar Currículo
-                        </a>
-                    </div>
+                    <div class="hero-visual-spacer" aria-hidden="true"></div>
                 </div>
             </div>
         </section>
@@ -604,7 +611,7 @@
 
     <!-- Scripts -->
     <script src="js/app.js?v=20260312-2"></script>
-    <script src="js/frame-animation.js?v=20260314-2"></script>
+    <script src="js/frame-animation.js?v=20260316-1"></script>
 
 </body>
 
