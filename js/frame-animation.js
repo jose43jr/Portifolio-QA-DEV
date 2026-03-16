@@ -1,168 +1,314 @@
-// Frame-by-Frame Hero Animation
-// Handles the loading and rendering of image sequences on a canvas to simulate a video.
-
 document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.getElementById('hero-frame-canvas');
-    if (!canvas) return;
+    const poster = document.getElementById('hero-frame-poster');
+    const heroSection = document.getElementById('hero');
 
-    const ctx = canvas.getContext('2d');
-    
-    // Configuration
-    const frameCount = 147;
-    const framePath = 'frame a frame/frame';
-    const extension = '.png';
-    
-    // State
-    const frames = [];
-    let currentFrame = 1;
-    let isImagesLoaded = false;
-    
-    // Load images
-    const loadImages = () => {
-        let loadedCount = 0;
-        
-        for (let i = 1; i <= frameCount; i++) {
-            const img = new Image();
-            // Pad start with 0s to match format frame00001.png
-            const paddedIndex = String(i).padStart(5, '0');
-            img.src = `${framePath}${paddedIndex}${extension}`;
-            
-            img.onload = () => {
-                loadedCount++;
-                
-                // Once a reasonable amount of frames is loaded, we can allow scrolling updates
-                if (loadedCount >= 10 && !isImagesLoaded) {
-                    isImagesLoaded = true;
-                    updateFrameOnScroll(); // Initial draw based on current scroll
-                }
-                
-                // If the very first frame loads, draw it immediately to avoid empty space
-                if (i === 1) {
-                    drawFrame(img);
-                }
-            };
-            
-            frames[i] = img;
-        }
+    if (!canvas || !poster || !heroSection) {
+        return;
+    }
+
+    const ctx = canvas.getContext('2d', { alpha: false });
+
+    if (!ctx) {
+        return;
+    }
+
+    const config = {
+        initialBatchSize: 12,
+        batchSize: 18,
+        mobileBreakpoint: 768,
+        rootMargin: '200px 0px',
+        variants: [
+            { frameCount: 72, path: 'frame-optimized/frame', extensions: ['avif', 'webp', 'png'] },
+            { frameCount: 147, path: 'frame a frame/frame', extensions: ['avif', 'webp', 'png'] }
+        ]
     };
-    
-    // Maintain aspect ratio cover logic
+
+    const state = {
+        currentFrame: 1,
+        highestRequestedFrame: 0,
+        initialFrameLoaded: false,
+        interactiveReady: false,
+        isTicking: false,
+        hasStartedLoading: false,
+        activeSequence: null,
+        reducedMotionQuery: window.matchMedia('(prefers-reduced-motion: reduce)'),
+        desktopQuery: window.matchMedia(`(min-width: ${config.mobileBreakpoint + 1}px)`),
+        frames: new Map()
+    };
+
+    const shouldAnimate = () => state.desktopQuery.matches && !state.reducedMotionQuery.matches;
+
+    const hideCanvas = () => {
+        canvas.classList.add('is-hidden');
+        poster.classList.remove('is-hidden');
+    };
+
+    const showCanvas = () => {
+        canvas.classList.remove('is-hidden');
+        poster.classList.add('is-hidden');
+    };
+
+    const getFrameSrc = (frameNumber) => {
+        if (!state.activeSequence) {
+            return null;
+        }
+
+        const paddedIndex = String(frameNumber).padStart(5, '0');
+        return `${state.activeSequence.path}${paddedIndex}.${state.activeSequence.extension}`;
+    };
+
+    const loadProbeImage = (src) => new Promise((resolve) => {
+        const img = new Image();
+        img.decoding = 'async';
+
+        img.addEventListener('load', () => resolve(img), { once: true });
+        img.addEventListener('error', () => resolve(null), { once: true });
+        img.src = src;
+    });
+
+    const resolveActiveSequence = async () => {
+        if (state.activeSequence) {
+            return state.activeSequence;
+        }
+
+        for (const variant of config.variants) {
+            for (const extension of variant.extensions) {
+                const probeSrc = `${variant.path}${String(1).padStart(5, '0')}.${extension}`;
+                const probeImage = await loadProbeImage(probeSrc);
+
+                if (probeImage) {
+                    state.activeSequence = { ...variant, extension };
+                    state.frames.set(1, probeImage);
+                    poster.src = probeSrc;
+                    return state.activeSequence;
+                }
+            }
+        }
+
+        return null;
+    };
+
+    const getFrame = (frameNumber) => {
+        if (state.frames.has(frameNumber)) {
+            return state.frames.get(frameNumber);
+        }
+
+        const frameSrc = getFrameSrc(frameNumber);
+
+        if (!frameSrc) {
+            return null;
+        }
+
+        const img = new Image();
+        img.decoding = 'async';
+        img.loading = 'eager';
+        img.src = frameSrc;
+        state.frames.set(frameNumber, img);
+
+        img.addEventListener('load', () => {
+            if (frameNumber === 1) {
+                state.initialFrameLoaded = true;
+                drawFrame(img);
+            }
+
+            if (!state.interactiveReady && frameNumber <= config.initialBatchSize) {
+                const readyFrames = Array.from({ length: config.initialBatchSize }, (_, index) => index + 1)
+                    .filter((index) => state.frames.get(index)?.complete).length;
+
+                if (readyFrames >= Math.min(8, config.initialBatchSize)) {
+                    state.interactiveReady = true;
+                    renderForCurrentMode();
+                }
+            } else if (frameNumber === state.currentFrame) {
+                drawFrame(img);
+            }
+        }, { once: true });
+
+        return img;
+    };
+
+    const preloadFrames = (start, end) => {
+        if (!state.activeSequence) {
+            return;
+        }
+
+        const boundedStart = Math.max(1, start);
+        const boundedEnd = Math.min(state.activeSequence.frameCount, end);
+
+        for (let frameNumber = boundedStart; frameNumber <= boundedEnd; frameNumber += 1) {
+            getFrame(frameNumber);
+        }
+
+        state.highestRequestedFrame = Math.max(state.highestRequestedFrame, boundedEnd);
+    };
+
     const drawFrame = (img) => {
-         if (!img || !img.complete || img.naturalWidth === 0) return;
-
-         // Get canvas dimensions
-         const cWidth = canvas.width;
-         const cHeight = canvas.height;
-         
-         // Get image dimensions
-         const { width: iWidth, height: iHeight } = img;
-         
-         // Calculate ratios
-         const widthRatio = cWidth / iWidth;
-         const heightRatio = cHeight / iHeight;
-         
-         // To achieve "cover" effect, use the larger ratio
-         const ratio = Math.max(widthRatio, heightRatio);
-         
-         const newWidth = iWidth * ratio;
-         const newHeight = iHeight * ratio;
-         
-         // Calculate positioning to center the image
-         // object-position: center 0% equivalent (top aligned)
-         const offsetX = (cWidth - newWidth) / 2;
-         const offsetY = 0; // Align top like the original object-position: center 0%
-         
-         // Clear previous frame
-         ctx.clearRect(0, 0, cWidth, cHeight);
-         
-         // Draw new frame
-         ctx.drawImage(img, 0, 0, iWidth, iHeight, offsetX, offsetY, newWidth, newHeight);
-    };
-    
-    // Scroll Logic
-    const updateFrameOnScroll = () => {
-        if (!isImagesLoaded) return;
-        
-        // Calculate the container bounds (the hero section)
-        const heroSection = document.getElementById('hero');
-        if (!heroSection) return;
-        
-        const rect = heroSection.getBoundingClientRect();
-        
-        // When rect.top is 0, we are at the top of the hero section.
-        // We want the animation to progress as we scroll down through the hero section.
-        // The scrollable distance inside the hero is its total height minus the viewport height.
-        const scrollableDistance = rect.height - window.innerHeight;
-        
-        // How far we have scrolled into the hero section (starting from 0 when the top of hero hits the top of viewport)
-        // Note: rect.top is negative as we scroll down
-        const scrolledDistance = -rect.top;
-        
-        let scrollFraction = 0;
-        
-        if (scrolledDistance > 0 && scrollableDistance > 0) {
-            scrollFraction = Math.min(1, scrolledDistance / scrollableDistance);
-        } else if (scrolledDistance <= 0) {
-             scrollFraction = 0;
-        } else {
-             scrollFraction = 1;
+        if (!img || !img.complete || img.naturalWidth === 0) {
+            return;
         }
 
-        // Map the fraction to a frame between 1 and frameCount
-        const targetFrame = Math.max(1, Math.min(frameCount, Math.floor(scrollFraction * frameCount) + 1));
-        
-        if (targetFrame !== currentFrame) {
-             currentFrame = targetFrame;
-             
-             // Redraw if the target frame is loaded
-             if (frames[currentFrame] && frames[currentFrame].complete) {
-                 requestAnimationFrame(() => {
-                     drawFrame(frames[currentFrame]);
-                 });
-             }
-        }
-    };
-    
-    // Attach scroll listener
-    window.addEventListener('scroll', updateFrameOnScroll, { passive: true });
-    
-    // Handle resizing
-    const resizeCanvas = () => {
-        const dpr = window.devicePixelRatio || 1;
-        // In the CSS the video takes 50% width on desktop and 100% on mobile. 
-        // We need to match the actual CSS dimensions.
-        // We get the computed size of the parent or the canvas itself to be accurate.
-        
-        // Let's use bounding client rect to get the exact rendered dimensions
         const rect = canvas.getBoundingClientRect();
-        
-        // Set actual size in memory (scaled to account for extra pixel density)
-        canvas.width = rect.width * dpr;
-        canvas.height = rect.height * dpr;
-        
-        // Normalize coordinate system to use css pixels
-        ctx.scale(dpr, dpr);
-        
-        // Ensure canvas CSS width/height are set implicitly by layout.css
-        // But we update rendering dimensions here.
-        
-        // Redraw current frame immediately on resize
-        if (frames[currentFrame] && frames[currentFrame].complete) {
-            // Need to set the width/height of the internal canvas context without dpr scaling for the draw logic
-             canvas.width = rect.width;
-             canvas.height = rect.height;
-             
-             // Reset transform to identity since we overwrote the width/height which resets it anyway
-             ctx.setTransform(1, 0, 0, 1, 0, 0); 
-             ctx.clearRect(0, 0, canvas.width, canvas.height);
-             drawFrame(frames[currentFrame]);
+        const cssWidth = Math.max(1, Math.round(rect.width));
+        const cssHeight = Math.max(1, Math.round(rect.height));
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const renderWidth = Math.max(1, Math.round(cssWidth * dpr));
+        const renderHeight = Math.max(1, Math.round(cssHeight * dpr));
+
+        if (canvas.width !== renderWidth || canvas.height !== renderHeight) {
+            canvas.width = renderWidth;
+            canvas.height = renderHeight;
+        }
+
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+        ctx.clearRect(0, 0, cssWidth, cssHeight);
+
+        const widthRatio = cssWidth / img.naturalWidth;
+        const heightRatio = cssHeight / img.naturalHeight;
+        const ratio = Math.max(widthRatio, heightRatio);
+        const drawWidth = img.naturalWidth * ratio;
+        const drawHeight = img.naturalHeight * ratio;
+        const offsetX = (cssWidth - drawWidth) / 2;
+        const offsetY = (cssHeight - drawHeight) / 2;
+
+        ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+        showCanvas();
+    };
+
+    const getScrollFrame = () => {
+        const rect = heroSection.getBoundingClientRect();
+        const scrollableDistance = Math.max(1, rect.height - window.innerHeight);
+        const scrolledDistance = Math.min(scrollableDistance, Math.max(0, -rect.top));
+        const scrollFraction = scrolledDistance / scrollableDistance;
+
+        return Math.max(
+            1,
+            Math.min(
+                state.activeSequence?.frameCount || 1,
+                Math.round(scrollFraction * ((state.activeSequence?.frameCount || 1) - 1)) + 1
+            )
+        );
+    };
+
+    const ensureFutureFrames = (targetFrame) => {
+        if (!shouldAnimate() || !state.activeSequence) {
+            return;
+        }
+
+        if (targetFrame + config.batchSize > state.highestRequestedFrame) {
+            preloadFrames(targetFrame, targetFrame + config.batchSize);
         }
     };
-    
-    // Initial setup
-    window.addEventListener('resize', resizeCanvas);
-    
-    // Trigger initial resize to set up correct dimensions based on CSS before loading images
-    resizeCanvas();
-    loadImages();
+
+    const renderFrame = (targetFrame) => {
+        state.currentFrame = targetFrame;
+
+        const targetImage = getFrame(targetFrame);
+
+        if (targetImage?.complete) {
+            drawFrame(targetImage);
+        } else {
+            const fallbackFrame = Math.max(1, targetFrame - 1);
+            const fallbackImage = state.frames.get(fallbackFrame) || state.frames.get(1);
+
+            if (fallbackImage?.complete) {
+                drawFrame(fallbackImage);
+            } else {
+                hideCanvas();
+            }
+        }
+
+        ensureFutureFrames(targetFrame);
+    };
+
+    const renderForCurrentMode = () => {
+        if (!state.initialFrameLoaded) {
+            hideCanvas();
+            return;
+        }
+
+        if (!shouldAnimate()) {
+            hideCanvas();
+            return;
+        }
+
+        if (!state.interactiveReady) {
+            const firstFrame = state.frames.get(1);
+
+            if (firstFrame?.complete) {
+                drawFrame(firstFrame);
+            } else {
+                hideCanvas();
+            }
+
+            return;
+        }
+
+        renderFrame(getScrollFrame());
+    };
+
+    const onScroll = () => {
+        if (!shouldAnimate() || !state.interactiveReady || state.isTicking) {
+            return;
+        }
+
+        state.isTicking = true;
+        window.requestAnimationFrame(() => {
+            renderFrame(getScrollFrame());
+            state.isTicking = false;
+        });
+    };
+
+    const onResize = () => {
+        renderForCurrentMode();
+    };
+
+    const startLoading = async () => {
+        if (state.hasStartedLoading || !shouldAnimate()) {
+            renderForCurrentMode();
+            return;
+        }
+
+        state.hasStartedLoading = true;
+
+        const sequence = await resolveActiveSequence();
+
+        if (!sequence) {
+            hideCanvas();
+            return;
+        }
+
+        const firstFrame = state.frames.get(1) || getFrame(1);
+
+        if (firstFrame?.complete) {
+            state.initialFrameLoaded = true;
+            drawFrame(firstFrame);
+        }
+
+        preloadFrames(1, config.initialBatchSize);
+        renderForCurrentMode();
+    };
+
+    hideCanvas();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onResize, { passive: true });
+    state.reducedMotionQuery.addEventListener('change', startLoading);
+    state.desktopQuery.addEventListener('change', startLoading);
+
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            if (entries.some((entry) => entry.isIntersecting)) {
+                startLoading();
+                observer.disconnect();
+            }
+        }, { rootMargin: config.rootMargin });
+
+        observer.observe(heroSection);
+    } else {
+        startLoading();
+    }
+
+    renderForCurrentMode();
 });
