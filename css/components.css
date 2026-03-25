@@ -255,6 +255,10 @@
     background: linear-gradient(135deg, #140f2c 0%, #2c2f78 55%, #090812 100%);
 }
 
+.video-card-playwright .video-thumbnail {
+    background: linear-gradient(135deg, #0e1e14 0%, #1e4d2e 55%, #08110b 100%);
+}
+
 /* Thumbnail image overlay for play icon */
 .video-thumbnail::before {
     content: '';
